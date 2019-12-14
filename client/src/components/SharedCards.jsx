@@ -67,7 +67,7 @@ class SharedCards extends Component {
 	};
 	render() {
 		return (
-			<div style={{ overflow: 'hidden' }}>
+			<div style={{ overflow: 'hidden', height: '130%' }}>
 				<div className="ui three item menu">
 					{tabs.map((tab, index) => {
 						return (

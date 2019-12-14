@@ -11,7 +11,14 @@
 }
 .status {
 	font-size: 15px;
-	color: #4a148c;
 	font-weight: 700;
 	transform: translate(45%, -200%) !important;
+}
+
+.menu-span {
+	color: #ffffff;
+	position: relative;
+	left: 90%;
+	bottom: 5vh;
+	cursor: pointer;
 }

@@ -24,7 +24,7 @@ const data = [
 class MyCards extends Component {
 	render() {
 		return (
-			<div>
+			<div style={{ overflow: 'hidden', height: '90vh', marginTop: '5vh' }}>
 				<List data={data} type="my_cards" />
 			</div>
 		);

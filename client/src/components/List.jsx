@@ -19,7 +19,7 @@ class List extends Component {
 										});
 									});
 								}
-								return <Card cardContent={array} />;
+								return <Card cardContent={array} cardType={item.type} />;
 							} else return null;
 						})}
 					</div>
@@ -38,7 +38,7 @@ class List extends Component {
 										});
 									});
 								}
-								return <Card cardContent={array} />;
+								return <Card cardContent={array} cardType={item.type} />;
 							} else return null;
 						})}
 					</div>
@@ -57,7 +57,7 @@ class List extends Component {
 										});
 									});
 								}
-								return <Card cardContent={array} />;
+								return <Card cardContent={array} cardType={item.type} />;
 							} else return null;
 						})}
 					</div>
@@ -76,7 +76,7 @@ class List extends Component {
 								});
 							});
 						}
-						return <Card cardContent={array} />;
+						return <Card cardContent={array} cardType={item.type} />;
 					})}
 				</div>
 			);
