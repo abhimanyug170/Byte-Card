@@ -1,9 +1,10 @@
 const Mongoose = require("mongoose");
 
 const userSchema = new Mongoose.Schema({
-    professionalCards : [],
-    socialCards : [],
-    otherCards : [],
+    professionalCards : [],//from someone else
+    socialCards: [],//from someone else
+    otherCards: [],//from someone else
+    personalCards : [],
 
     //personal Info
     name: String,
