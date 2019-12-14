@@ -1,0 +1,24 @@
+#defImage {
+	min-width: 120px;
+	min-height: 130px;
+	border-radius: 50% !important;
+	transform: translate(10%, 30%);
+}
+.cardContentHeader {
+	color: #ffffff;
+	font-size: 20px;
+	transform: translate(10%, -200%) !important;
+}
+.status {
+	font-size: 15px;
+	font-weight: 700;
+	transform: translate(45%, -200%) !important;
+}
+
+.menu-span {
+	color: #ffffff;
+	position: relative;
+	left: 90%;
+	bottom: 5vh;
+	cursor: pointer;
+}
