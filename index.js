@@ -10,7 +10,7 @@ mongoose.set('useFindAndModify', false);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 dotenv.config();
-mongoose.connect(process.env.LDBURL, { useNewUrlParser: true });
+mongoose.connect(process.env.DBURL, { useNewUrlParser: true });
 app.use(express.static(__dirname + "public"));
 
 //importing routes 
