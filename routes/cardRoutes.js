@@ -73,10 +73,10 @@ router.post("/create", (req, res) => {
 });
 
 //read
-router.get("/get/custom/:uid", async(req, res) => {
+router.get("/get/custom/:uid", (req, res) => {
     console.log("Custom cards being fetched...");
     const userId = req.params.uid;
-    User.findById(userId, async(err, foundUser) => {
+    User.findById(userId, (err, foundUser) => {
         if(err){
             console.error(err);
             res.send({
@@ -93,90 +93,131 @@ router.get("/get/custom/:uid", async(req, res) => {
         }
         else{
             // var cards = [];
-            const custom_cards = foundUser.otherCards;
-            console.log("before for each");
-            cards = custom_cards.map(async cardId => {
-                console.log("inside for each");
-                const value = await Card.findById(cardId, (err, foundCard) => {
-                    if (err) {
+            var card_queries = [];
+            var custom_cards = foundUser.otherCards;
+
+            //we can't use the loop with mongoose queries since find is an async function
+
+            // console.log("before for each");
+            // cards = custom_cards.forEach(async cardId => {
+            //     console.log("inside for each");
+            //     const value = await Card.findById(cardId, (err, foundCard) => {
+            //         if (err) {
+            //             console.error(err);
+            //             res.send({
+            //                 error: err.message
+            //             });
+            //             return;
+            //         }
+            //         else if (foundCard == null);
+            //         else {
+            //             console.log("found a card", foundCard);
+            //             // cards.push(foundCard);
+            //             return foundCard;
+            //             // console.log("cards : ", cards);
+            //         }
+            //     });
+            //     return value;
+            // });
+
+            custom_cards.forEach(cardId => {
+                card_queries.push(Card.findById(cardId));
+            });
+
+            Promise.all(card_queries)
+            .then(cards => cards.filter(card => card!=null))
+            .then(() => console.log("Custom cards fetched"))
+            .then((cards) => res.send(cards))
+            .catch(err => {
                         console.error(err);
                         res.send({
                             error: err.message
                         });
                         return;
-                    }
-                    else if (foundCard == null);
-                    else {
-                        console.log("found a card", foundCard);
-                        // cards.push(foundCard);
-                        return foundCard;
-                        // console.log("cards : ", cards);
-                    }
-                });
-                return value;
-            });
-            console.log("cards array : ", cards);
-            console.log("Custom cards send...");
-            res.send(cards);
-            return;
+                    });
         }
     });
     
 });
 
-// router.get("/get/professional/:uid", (req, res) => {
-//     const userId = req.params.uid;
-//     const cards = [];
-//     User.findById(userId, (err, foundUser) => {
-//         const pro_Cards = foundUser.professionalCards;
-//         pro_Cards.forEach(cardId => {
-//             Card.findById(cardId, (err, foundCard) => {
-//                 if (err) {
-//                     console.error(err);
-//                     res.send({
-//                         error: err.message
-//                     });
-//                     return;
-//                 }
-//                 else if (foundCard == null) {
-//                     // continue;
-//                 }
-//                 else {
-//                     cards.push(foundCard);
-//                 }
-//             });
-//         });
-//     });
-//     res.send(cards);
-//     return;
-// });
+router.get("/get/professional/:uid", (req, res) => {
+  console.log("Professional cards being fetched...");
+  const userId = req.params.uid;
+  User.findById(userId, (err, foundUser) => {
+    if (err) {
+      console.error(err);
+      res.send({
+        error: err.message
+      });
+      return;
+    } else if (foundUser == null) {
+      console.error("No user found");
+      res.send({
+        error: "No user found"
+      });
+      return;
+    } else {
+      var card_queries = [];
+      var pro_cards = foundUser.professionalCards;
 
-// router.get("/get/social/:uid", (req, res) => {
-//     const userId = req.params.uid;
-//     const cards = [];
-//     User.findById(userId, (err, foundUser) => {
-//         const social_cards = foundUser.socialCards;
-//         social_cards.forEach(cardId => {
-//             Card.findById(cardId, (err, foundCard) => {
-//                 if (err) {
-//                     console.error(err);
-//                     res.send({
-//                         error: err.message
-//                     });
-//                     return;
-//                 }
-//                 else if (foundCard == null) {
-//                     // continue;
-//                 }
-//                 else {
-//                     cards.push(foundCard);
-//                 }
-//             });
-//         });
-//     });
-//     res.send(cards);
-//     return;
-// });
+      pro_cards.forEach(cardId => {
+        card_queries.push(Card.findById(cardId));
+      });
+
+      Promise.all(card_queries)
+        .then(cards => cards.filter(card => card != null))
+        .then(() => console.log("Professional cards fetched"))
+        .then(cards => res.send(cards))
+        .catch(err => {
+          console.error(err);
+          res.send({
+            error: err.message
+          });
+          return;
+        });
+    }
+  });
+});
+
+router.get("/get/social/:uid", (req, res) => {
+  console.log("Social cards being fetched...");
+  const userId = req.params.uid;
+  User.findById(userId, (err, foundUser) => {
+    if (err) {
+      console.error(err);
+      res.send({
+        error: err.message
+      });
+      return;
+    } else if (foundUser == null) {
+      console.error("No user found");
+      res.send({
+        error: "No user found"
+      });
+      return;
+    } else {
+      // var cards = [];
+      var card_queries = [];
+      var social_cards = foundUser.otherCards;
+
+      social_cards.forEach(cardId => {
+        card_queries.push(Card.findById(cardId));
+      });
+
+      Promise.all(card_queries)
+        .then(cards => cards.filter(card => card != null))
+        .then(() => console.log("Social cards fetched"))
+        .then(cards => res.send(cards))
+        .catch(err => {
+          console.error(err);
+          res.send({
+            error: err.message
+          });
+          return;
+        });
+    }
+  });
+});
 
 router.get("/get/personal/:uid", (req, res) => {
     const userId = req.params.uid;
