@@ -65,7 +65,7 @@ router.post("/create", (req, res) => {
 
                 }
                 console.log("Card Created");
-                res.send(createdCard);
+                res.send(createdCard.populate('user'));
                 return;
             });
         }
@@ -76,7 +76,9 @@ router.post("/create", (req, res) => {
 router.get("/get/custom/:uid", (req, res) => {
     console.log("Custom cards being fetched...");
     const userId = req.params.uid;
+    // console.log(userId);
     User.findById(userId, (err, foundUser) => {
+        // console.log(foundUser);
         if(err){
             console.error(err);
             res.send({
@@ -92,7 +94,6 @@ router.get("/get/custom/:uid", (req, res) => {
             return;
         }
         else{
-            // var cards = [];
             var card_queries = [];
             var custom_cards = foundUser.otherCards;
 
@@ -121,20 +122,20 @@ router.get("/get/custom/:uid", (req, res) => {
             // });
 
             custom_cards.forEach(cardId => {
-                card_queries.push(Card.findById(cardId));
+                card_queries.push(Card.findById(cardId).populate('user'));
             });
 
             Promise.all(card_queries)
-            .then(cards => cards.filter(card => card!=null))
-            .then(() => console.log("Custom cards fetched"))
-            .then((cards) => res.send(cards))
-            .catch(err => {
-                        console.error(err);
-                        res.send({
-                            error: err.message
-                        });
-                        return;
-                    });
+              .then(cards => cards.filter(card => card != null))
+              .then(cards => res.send(cards))
+              .then(() => console.log("Custom cards fetched"))
+              .catch(err => {
+                console.error(err);
+                res.send({
+                  error: err.message
+                });
+                return;
+              });
         }
     });
     
@@ -159,15 +160,16 @@ router.get("/get/professional/:uid", (req, res) => {
     } else {
       var card_queries = [];
       var pro_cards = foundUser.professionalCards;
+    //   console.log(pro_cards);
 
       pro_cards.forEach(cardId => {
-        card_queries.push(Card.findById(cardId));
+        card_queries.push(Card.findById(cardId).populate("user"));
       });
 
       Promise.all(card_queries)
         .then(cards => cards.filter(card => card != null))
-        .then(() => console.log("Professional cards fetched"))
         .then(cards => res.send(cards))
+        .then(() => console.log("Professional cards fetched"))
         .catch(err => {
           console.error(err);
           res.send({
@@ -201,13 +203,13 @@ router.get("/get/social/:uid", (req, res) => {
       var social_cards = foundUser.otherCards;
 
       social_cards.forEach(cardId => {
-        card_queries.push(Card.findById(cardId));
+        card_queries.push(Card.findById(cardId).populate("user"));
       });
 
       Promise.all(card_queries)
         .then(cards => cards.filter(card => card != null))
-        .then(() => console.log("Social cards fetched"))
         .then(cards => res.send(cards))
+        .then(() => console.log("Social cards fetched"))
         .catch(err => {
           console.error(err);
           res.send({
@@ -221,7 +223,7 @@ router.get("/get/social/:uid", (req, res) => {
 
 router.get("/get/personal/:uid", (req, res) => {
     const userId = req.params.uid;
-    Card.find({user : userId}, (err, foundCards) => {
+    Card.find({user : userId}).populate('user').exec((err, foundCards) => {
         if (err) {
             console.error(err);
             res.send({
@@ -242,13 +244,13 @@ router.get("/get/personal/:uid", (req, res) => {
 
 
 //share
-//todo:test this
 router.post("/share", (req,res) => {
     console.log("sharing card ...");
     const data = req.body;
+    console.log(data);
     const userId = data.user;
     const cardId = data.cardId;
-    const type = data.type;
+    const type = data.type;//from client side
 
     User.findById(userId, (err, foundUser) => {
         if (err) {
@@ -291,7 +293,6 @@ router.post("/share", (req,res) => {
 });
 
 //edit
-//todo:test this
 router.put("/edit", (req,res) => {
     const data = req.body;
     const attributes = data.attributes;

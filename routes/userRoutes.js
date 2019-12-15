@@ -55,24 +55,56 @@ router.get("/get/:uid", (req,res) => {
 //update
 router.put("/update", (req, res) => {
     const data = req.body;
+    console.log(data);
     const userId = data.userId;
     delete data.userId;
-
-    User.findOneAndUpdate({ _id: userId }, data, {
-        new: true
-    })
-    .then((updatedUser) => {
-        console.log("User updated");
-        res.send(updatedUser);
-        return;
-    })
-    .catch(err => {
-        console.error(err);
-        res.send({
-            error: err.message
-        });
-        return;
-    })
+    console.log("user found");
+    // User.findOneAndUpdate({ _id: userId }, data, {
+    //     new: true
+    // })
+    // .then((updatedUser) => {
+    //     if (updatedUser == null){
+    //         console.log("Empty User fetched : ", userId);
+    //         res.send([]);
+    //         return;
+    //     }
+    //     else {
+    //         console.log("User fetched : ", userId);
+    //         res.send(foundUser);
+    //         return;
+    //     }
+    // })
+    // .catch(err => {
+    //     console.error(err);
+    //     res.send({
+    //         error: err.message
+    //     });
+    //     return;
+    // })
+    User.findById(userId, (err, foundUser) => {
+        if (err) {
+            console.error(err);
+            res.send({
+                error: err.message
+            });
+            return;
+        }
+        else if (foundUser == null){
+            console.log("No user found : ", userId);
+            res.send([]);
+            return;
+        }
+        else {
+            Object.keys(data).forEach(key => {
+                foundUser[key] = data[key];
+            });
+            foundUser.save();
+            console.log("user updated");
+            res.send(foundUser);
+            return;
+        }
+    });
+    // })
 });
 
 //delete

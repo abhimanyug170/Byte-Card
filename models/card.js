@@ -1,8 +1,13 @@
 const Mongoose = require("mongoose");
 
+const User = require("./user");
+
 const cardSchema = new Mongoose.Schema({
     type : String, //PROFESSIONAL, SOCIAL, CUSTOM
-    user : Mongoose.Schema.Types.ObjectId,
+    user : {
+        type : Mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    },
     attributes : []
 });
 
