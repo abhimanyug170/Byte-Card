@@ -9,6 +9,7 @@ import QRCode from './QRCode';
 import QRRead from './QRRead';
 import FabButton from './FabButton';
 import TabGroup from './TabGroup';
+import cardDisplay from './cardDisplay';
 import history from '../history';
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
 					<Route path="/my_cards" component={MyCards} />
 					<Route path="/qrcode" component={QRCode} />
 					<Route path="/qrread" component={QRRead} />
+					<Route path="/card_display" component={cardDisplay} />
 					<Route path="/" component={Home} />
 				</Switch>
 				<Route path="/" component={FabButton} />
