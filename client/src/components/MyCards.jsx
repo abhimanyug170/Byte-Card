@@ -25,7 +25,7 @@ class MyCards extends Component {
 	render() {
 		return (
 			<div style={{ overflow: 'hidden', height: '90vh', marginTop: '5vh' }}>
-				<List data={data} type="my_cards" />
+				<List history={this.props.history} data={data} type="my_cards" />
 			</div>
 		);
 	}

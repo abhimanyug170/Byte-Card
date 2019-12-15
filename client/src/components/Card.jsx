@@ -3,6 +3,21 @@ import avatar from '../images/avatar.png';
 import '../stylesheets/Card.css';
 
 class Card extends Component {
+	state = {
+		open: false
+	};
+	handleClick = () => {
+		this.setState({
+			open: !this.state.open
+		});
+	};
+
+	handleShareClick = () => {
+		this.props.history.push({
+			pathname: '/qrcode',
+			state: { data: this.props.cardContent[1].value }
+		});
+	};
 	render() {
 		return (
 			<div className="ui centered card" style={{ width: '95%', maxWidth: '350px', height: '30vh' }}>
@@ -12,15 +27,31 @@ class Card extends Component {
 						height: '50% '
 					}}
 				>
-					<span className="menu-span menu">
-						<i className="left dropdown icon ellipsis vertical" />
+					<span className="menu-span item">
+						<i className="left dropdown icon ellipsis vertical" onClick={this.handleClick} />
+						<div
+							class="left menu"
+							style={{
+								background: '#ffffff',
+								color: 'black',
+								width: '20%',
+								fontFamily: "'Ubuntu', sans-serif",
+								zIndex: '999',
+								transform: 'translate(-100%, 200%)',
+								display: `${this.state.open ? 'block' : 'none'}`
+							}}
+						>
+							<div class="item">Delete</div>
+							<div
+								class="item"
+								style={{
+									display: `${this.props.cardType === 'my_cards' ? 'block' : 'none'}`
+								}}
+							>
+								Edit
+							</div>
+						</div>
 					</span>
-					<div
-						className="left menu"
-						style={{ position: 'fixed', color: '#000000', transform: 'translate(200%, -50%)' }}
-					>
-						<div className="item">9</div>
-					</div>
 
 					<img src={avatar} alt="avatar" className="ui avatar image" id="defImage" />
 					<div className="content">
@@ -37,15 +68,11 @@ class Card extends Component {
 					<div
 						className="ui circular large orange icon button"
 						style={{ transform: 'translate(780%, -250%)' }}
+						onClick={this.handleShareClick}
 					>
 						<i className="icon chevron share alternate" />
 					</div>
 				</div>
-				{/* <div className="ui right fixed button" onClick={this.onClick}>
-					<div className="ui circular large blue icon button ">
-						<i className="icon chevron qrcode" />
-					</div>
-				</div> */}
 			</div>
 		);
 	}

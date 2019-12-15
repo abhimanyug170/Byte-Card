@@ -14,7 +14,7 @@ const data = [
 
 	{
 		type: 'Custom',
-		name: 'Nandi',
+		name: 'Abhimanyu',
 		phone: 'bnmm',
 		email: 'vbhn',
 		github: 'bnbnmm',
@@ -83,7 +83,7 @@ class SharedCards extends Component {
 						);
 					})}
 				</div>
-				<List data={data} type="shared_cards" cardType={this.state.tab} />
+				<List history={this.props.history} data={data} type="shared_cards" cardType={this.state.tab} />
 			</div>
 		);
 	}
