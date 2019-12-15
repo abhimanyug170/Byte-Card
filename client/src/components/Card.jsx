@@ -12,7 +12,8 @@ class Card extends Component {
 		});
 	};
 
-	handleShareClick = () => {
+	handleShareClick = (e) => {
+		e.stopPropagation();
 		this.props.history.push({
 			pathname: '/qrcode',
 			state: { data: this.props.item }

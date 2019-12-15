@@ -10,6 +10,7 @@ class QRRead extends Component {
 
 	componentDidUpdate() {
 		console.log(this.state.result);
+		alert('Card added');
 		this.props.history.push('/');
 	}
 
