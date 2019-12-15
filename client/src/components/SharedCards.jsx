@@ -54,7 +54,7 @@ const data = [
 	}
 ];
 
-const tabs = [ 'Personal', 'Professional', 'Custom' ];
+const tabs = [ 'Social', 'Professional', 'Custom' ];
 
 class SharedCards extends Component {
 	state = {
