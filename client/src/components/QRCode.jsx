@@ -7,7 +7,7 @@ class QRCode extends Component {
 		console.log(this.props.location.state.data);
 		return (
 			<div style={{ margin: '100px 100px' }}>
-				<QR value={this.props.location.state.data} />
+				<QR value={JSON.stringify(this.props.location.state.data)} />
 			</div>
 		);
 	}

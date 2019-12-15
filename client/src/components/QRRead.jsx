@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import QrReader from 'react-qr-reader';
+import { connect } from 'react-redux';
+import { createSharedCard } from '../actions';
 
 class QRRead extends Component {
 	state = {
@@ -31,4 +33,4 @@ class QRRead extends Component {
 	}
 }
 
-export default QRRead;
+export default connect(null, createSharedCard)(QRRead);

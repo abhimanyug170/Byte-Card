@@ -1,58 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import List from './List';
-
-const data = [
-	{
-		type: 'Professional',
-		name: 'Nandi',
-		phone: 'bnmm',
-		email: 'vbhn',
-		github: 'bnbnmm',
-		linkedIn: 'hvjbkjlkl'
-	},
-
-	{
-		type: 'Custom',
-		name: 'Abhimanyu',
-		phone: 'bnmm',
-		email: 'vbhn',
-		github: 'bnbnmm',
-		facebook: 'hvjbkjlkl'
-	},
-	{
-		type: 'Personal',
-		name: 'Nandi',
-		phone: 'bnmm',
-		email: 'vbhn',
-		instagram: 'bnbnmm',
-		facebook: 'hvjbkjlkl'
-	},
-	{
-		type: 'Personal',
-		name: 'Nandi',
-		phone: 'bnmm',
-		email: 'vbhn',
-		instagram: 'bnbnmm',
-		facebook: 'hvjbkjlkl'
-	},
-	{
-		type: 'Professional',
-		name: 'Nandi',
-		phone: 'bnmm',
-		email: 'vbhn',
-		github: 'bnbnmm',
-		linkedIn: 'hvjbkjlkl'
-	},
-	{
-		type: 'Personal',
-		name: 'Nandi',
-		phone: 'bnmm',
-		email: 'vbhn',
-		instagram: 'bnbnmm',
-		facebook: 'hvjbkjlkl'
-	}
-];
 
 const tabs = [ 'Social', 'Professional', 'Custom' ];
 
@@ -66,6 +15,7 @@ class SharedCards extends Component {
 		});
 	};
 	render() {
+		console.log(this.props.sharedCards);
 		return (
 			<div style={{ overflow: 'hidden', height: '130%' }}>
 				<div className="ui three item menu">
@@ -83,10 +33,21 @@ class SharedCards extends Component {
 						);
 					})}
 				</div>
-				<List history={this.props.history} data={data} type="shared_cards" cardType={this.state.tab} />
+				<List
+					history={this.props.history}
+					data={this.props.sharedCards}
+					type="shared_cards"
+					cardType={this.state.tab}
+				/>
 			</div>
 		);
 	}
 }
 
-export default SharedCards;
+const mapStateToProps = (state) => {
+	return {
+		sharedCards: state.sharedCards
+	};
+};
+
+export default connect(mapStateToProps)(SharedCards);

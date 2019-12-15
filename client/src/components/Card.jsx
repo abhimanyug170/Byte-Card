@@ -15,12 +15,16 @@ class Card extends Component {
 	handleShareClick = () => {
 		this.props.history.push({
 			pathname: '/qrcode',
-			state: { data: this.props.cardContent[1].value }
+			state: { data: this.props.item }
 		});
 	};
 	render() {
 		return (
-			<div className="ui centered card" style={{ width: '95%', maxWidth: '350px', height: '30vh' }}>
+			<div
+				className="ui centered card"
+				style={{ width: '95%', maxWidth: '350px', height: '30vh' }}
+				onClick={() => this.props.history.push('/card_display')}
+			>
 				<div
 					style={{
 						background: `${this.props.cardType === 'Professional' ? '#673ab7' : '#f44336'}`,
